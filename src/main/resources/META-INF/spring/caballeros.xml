@@ -1,8 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<beans 
+	xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	
+	xsi:schemaLocation="http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop.xsd 
+	http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd">
    <bean id="caballero" class="es.caser.spring.caballeros.CaballeroSanJorge">
       <constructor-arg ref="mision" />
    </bean>
    <bean id="mision" class="es.caser.spring.misiones.MisionMatarDragon">      
    </bean>
+    <bean id="juglar" class="es.caser.spring.juglares.Juglar">      
+   </bean>
+   <aop:config>
+      <aop:aspect ref="juglar">
+         <aop:pointcut id="embark" expression="execution(* *.iniciarMision(..))" />
+         <aop:before pointcut-ref="embark" method="cantarAntesMision" />
+         <aop:after pointcut-ref="embark" method="cantarDespuesMision" />
+      </aop:aspect>
+   </aop:config>
 </beans>
